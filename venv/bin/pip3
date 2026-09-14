@@ -1,4 +1,6 @@
-#!/home/isaac/ecommerce/venv/bin/python
+#!/bin/sh
+'''exec' "/home/isaac/moms site/ecommerce/venv/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
