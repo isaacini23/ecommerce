@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home - E-Commerce Store
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+
+        <h1>Welcome to Our Store</h1>
+
+        <p>
+            Discover quality products at great prices.
+        </p>
+
+        <a href="#" class="btn">
+            Shop Now
+        </a>
+
+    </div>
+</section>
+
+
+<section class="featured-products">
+    <div class="container">
+
+        <h2>Featured Products</h2>
+
+        {% if featured_products %}
+
+            <div class="product-grid">
+
+                {% for product in featured_products %}
+
+                    <article class="product-card">
+
+                        {% if product.image %}
+                            <img
+                                src="{{ product.image.url }}"
+                                alt="{{ product.name }}"
+                            >
+                        {% endif %}
+
+                        <h3>{{ product.name }}</h3>
+
+                        {% if product.discount_price %}
+                            <p>
+                                <del>₦ {{ product.price }}</del>
+                                <strong>₦ {{ product.discount_price }}</strong>
+                            </p>
+                        {% else %}
+                            <p>
+                                <strong>₦{{ product.price }}</strong>
+                            </p>
+                        {% endif %}
+
+                        <a href="{% url 'products:detail' product.slug %}" class="btn">
+                            View Product
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p>
+                No featured products available yet.
+            </p>
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+Products - E-Commerce Store
+{% endblock %}
+
+{% block content %}
+
+<section class="products-page">
+    <div class="container">
+
+        <h1>All Products</h1>
+
+        {% if products %}
+
+            <div class="product-grid">
+
+                {% for product in products %}
+
+                    <article class="product-card">
+
+                        {% if product.image %}
+                            <img
+                                src="{{ product.image.url }}"
+                                alt="{{ product.name }}"
+                            >
+                        {% endif %}
+
+                        <h3>{{ product.name }}</h3>
+
+                        {% if product.brand %}
+                            <p>{{ product.brand }}</p>
+                        {% endif %}
+
+                        {% if product.discount_price %}
+                            <p>
+                                <del>₦{{ product.price }}</del>
+                                <strong>₦{{ product.discount_price }}</strong>
+                            </p>
+                        {% else %}
+                            <p>
+                                <strong>₦{{ product.price }}</strong>
+                            </p>
+                        {% endif %}
+
+                        <a
+                        href="{% url 'products:detail' product.slug %}" class="btn">View Product</a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p>No products are available at the moment.</p>
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

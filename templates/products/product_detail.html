@@ -1,0 +1,124 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+{{ product.name }} - E-Commerce Store
+{% endblock %}
+
+{% block content %}
+
+<section class="product-detail">
+    <div class="container">
+
+        <div class="product-detail-grid">
+
+            <!-- Product Images -->
+            <div class="product-detail-image">
+
+                {% if product.image %}
+                    <div class="main-product-image">
+                        <img
+                            id="main-product-image"
+                            src="{{ product.image.url }}"
+                            alt="{{ product.name }}"
+                        >
+                    </div>
+                {% else %}
+                    <p>No main image available.</p>
+                {% endif %}
+
+
+                {% if product.images.all %}
+                    <div class="product-gallery">
+
+                        {% for image in product.images.all %}
+
+                            <div class="gallery-image">
+                                <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ image.alt_text|default:product.name }}"
+                                    onclick="changeMainImage(this)"
+                                >
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Product Information -->
+            <div class="product-detail-info">
+
+
+                <p class="product-category">
+                    <h2>Category: {{ product.category.name }}</h2>
+                </p>
+
+                <h1>{{ product.name }}</h1>
+
+                {% if product.brand %}
+                    <p>
+                        <strong>Brand:</strong> {{ product.brand }}
+                    </p>
+                {% endif %}
+
+
+                <div class="product-price">
+
+                    {% if product.discount_price %}
+                        <del>₦{{ product.price }}</del>
+                        <strong>₦{{ product.discount_price }}</strong>
+                    {% else %}
+                        <strong>₦{{ product.price }}</strong>
+                    {% endif %}
+
+                </div>
+
+
+                <div class="product-description">
+                    <h2>Description</h2>
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+                </div>
+
+
+               <div class="product-actions">
+
+                <form method="post" action="{% url 'cart:add' product.id %}">
+
+                    {% csrf_token %}
+
+                    <label for="quantity">
+                        Quantity
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        name="quantity"
+                        value="1"
+                        min="1"
+                    >
+
+                    <button type="submit" class="btn">
+                        Add to Cart
+                    </button>
+
+                </form>
+
+            </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+```

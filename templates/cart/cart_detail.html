@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shopping Cart - E-Commerce Store
+{% endblock %}
+
+{% block content %}
+
+<section class="container">
+
+
+<h1>Shopping Cart</h1>
+
+{% if cart.items.all %}
+
+    {% for item in cart.items.all %}
+
+        <div
+            class="cart-item"
+            data-cart-item-id="{{ item.id }}"
+        >
+
+            <div class="cart-item-info">
+
+                {% if item.product.image %}
+                    <img
+                        src="{{ item.product.image.url }}"
+                        alt="{{ item.product.name }}"
+                        width="100"
+                    >
+                {% endif %}
+
+                <div>
+                    <h3>{{ item.product.name }}</h3>
+
+                    <p>
+                        ₦{{ item.product.current_price }}
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="cart-item-actions">
+
+                <form
+                    method="post"
+                    action="{% url 'cart:update' item.id %}"
+                    class="cart-update-form"
+                >
+
+                    {% csrf_token %}
+
+                    <label for="quantity-{{ item.id }}">
+                        Quantity
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantity-{{ item.id }}"
+                        name="quantity"
+                        value="{{ item.quantity }}"
+                        min="1"
+                        class="cart-quantity"
+                    >
+
+                    <button type="submit" class="btn1">
+                        Update
+                    </button>
+
+                </form>
+
+                <form
+                    method="post"
+                    action="{% url 'cart:remove' item.id %}"
+                    class="cart-remove-form"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Remove
+                    </button>
+
+                </form>
+
+            </div>
+
+            <p>
+                <strong class="cart-item-total">
+                    ₦{{ item.total_price }}
+                </strong>
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+    <div class="cart-summary">
+
+        <h2>
+            Total: ₦{{ cart.total_price }}
+        </h2>
+
+    </div>
+
+{% else %}
+
+    <p>Your cart is empty.</p>
+
+    <a
+        href="{% url 'products:list' %}"
+        class="btn"
+    >
+        Continue Shopping
+    </a>
+
+{% endif %}
+
+
+</section>
+
+{% endblock %}
