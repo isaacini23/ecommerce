@@ -44,7 +44,12 @@
                 </li>
 
                 <li>
-                    <a href="#">Cart</a>
+                    <a href="{% url 'cart:detail' %}">
+                        Cart
+                        {% if request.user.is_authenticated and request.user.cart.total_items > 0 %}
+                            (<span id="cart-count">{{ request.user.cart.total_items }}</span>)
+                        {% endif %}
+                    </a>
                 </li>
 
                 <li>

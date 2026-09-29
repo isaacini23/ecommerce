@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from products.models import Product
 from .models import Cart, CartItem
 
-
 @login_required
 def add_to_cart(request, product_id):
     if request.method == "POST":
@@ -29,10 +28,16 @@ def add_to_cart(request, product_id):
 
         # Make sure the product has inventory
         if inventory is None or inventory.is_out_of_stock:
-            messages.error(
-                request,
-                "This product is currently out of stock."
-            )
+            message = "This product is currently out of stock."
+
+            messages.error(request, message)
+
+            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+                return JsonResponse({
+                    "success": False,
+                    "message": message
+                }, status=400)
+
             return redirect("products:detail", product.slug)
 
         cart, created = Cart.objects.get_or_create(
@@ -52,19 +57,34 @@ def add_to_cart(request, product_id):
 
         # Check available stock
         if new_quantity > inventory.available_quantity:
-            messages.error(
-                request,
+            message = (
                 f"Only {inventory.available_quantity} units are available."
             )
+
+            messages.error(request, message)
+
+            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+                return JsonResponse({
+                    "success": False,
+                    "message": message
+                }, status=400)
+
             return redirect("products:detail", product.slug)
 
         cart_item.quantity = new_quantity
         cart_item.save()
 
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return JsonResponse({
+                "success": True,
+                "message": f"{product.name} added to your cart.",
+                "cart_total_items": cart.total_items,
+                "quantity": cart_item.quantity,
+            })
+
         return redirect("cart:detail")
 
     return redirect("products:list")
-
 
 @login_required
 def update_cart_item(request, item_id):
@@ -130,6 +150,7 @@ def update_cart_item(request, item_id):
                 "item_total": str(cart_item.total_price),
                 "cart_total": str(cart.total_price),
                 "quantity": cart_item.quantity,
+                "cart_total_items": cart.total_items,
             })
 
     return redirect("cart:detail")

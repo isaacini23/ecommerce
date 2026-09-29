@@ -8,7 +8,7 @@ Shopping Cart - E-Commerce Store
 
 <section class="container">
 
-
+```
 <h1>Shopping Cart</h1>
 
 {% if cart.items.all %}
@@ -54,16 +54,37 @@ Shopping Cart - E-Commerce Store
                         Quantity
                     </label>
 
-                    <input
-                        type="number"
-                        id="quantity-{{ item.id }}"
-                        name="quantity"
-                        value="{{ item.quantity }}"
-                        min="1"
-                        class="cart-quantity"
-                    >
+                    <div class="quantity-control">
 
-                    <button type="submit" class="btn1">
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-minus"
+                        >
+                            −
+                        </button>
+
+                        <input
+                            type="number"
+                            id="quantity-{{ item.id }}"
+                            name="quantity"
+                            value="{{ item.quantity }}"
+                            min="1"
+                            class="cart-quantity"
+                        >
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-plus"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn1"
+                    >
                         Update
                     </button>
 
@@ -107,18 +128,29 @@ Shopping Cart - E-Commerce Store
     </div>
 
 {% else %}
+ <div class="empty-cart">
 
-    <p>Your cart is empty.</p>
+        <div class="empty-cart-icon">
+            🛒
+        </div>
 
-    <a
-        href="{% url 'products:list' %}"
-        class="btn"
-    >
-        Continue Shopping
-    </a>
+        <h2>Your cart is empty</h2>
+
+        <p>
+            You haven't added any products to your cart yet.
+        </p>
+
+        <a
+            href="{% url 'products:list' %}"
+            class="btn"
+        >
+            Continue Shopping
+        </a>
+
+    </div>
 
 {% endif %}
-
+```
 
 </section>
 

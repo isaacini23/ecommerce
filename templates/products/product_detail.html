@@ -88,8 +88,11 @@
 
 
                <div class="product-actions">
-
-                <form method="post" action="{% url 'cart:add' product.id %}">
+            <form
+                method="post"
+                action="{% url 'cart:add' product.id %}"
+                class="add-to-cart-form"
+            >
 
                     {% csrf_token %}
 
