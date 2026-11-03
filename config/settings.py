@@ -163,3 +163,6 @@ MAILERS = {
 AUTH_USER_MODEL = "accounts.User"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+# Email configuration for local development
+
+DEFAULT_FROM_EMAIL = "noreply@example.com"
