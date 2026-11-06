@@ -53,7 +53,11 @@
                 </li>
 
                 <li>
-                    <a href="{% url 'accounts:login' %}">Login</a>
+                    {% if not request.user.is_authenticated %}
+                        <a href="{% url 'accounts:login' %}">Login</a>
+                    {% else %}
+                        <a href="{% url 'accounts:logout' %}">Logout</a>
+                    {% endif %}
                 </li>
             </ul>
 
