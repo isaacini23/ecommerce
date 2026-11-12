@@ -115,7 +115,7 @@ class Product(models.Model):
     @property
     def current_price(self):
         if self.discount_price is not None:
-            return self.discount_price
+            return max(self.price - self.discount_price, 0)
         return self.price
 
 
