@@ -212,3 +212,7 @@ DEFAULT_FROM_EMAIL = "noreply@example.com"
 # --------------------------------------------------
 
 AUTH_USER_MODEL = "accounts.User"
+OWNER_REGISTRATION_CODE = os.getenv(
+    "OWNER_REGISTRATION_CODE",
+    ""
+)

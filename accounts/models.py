@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+import uuid
+from datetime import timedelta
+
+from django.conf import settings
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -66,6 +71,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         default=False
     )
+    is_product_manager = models.BooleanField(
+    default=False
+    )
 
     date_joined = models.DateTimeField(
         auto_now_add=True
@@ -79,3 +87,54 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    
+def default_invitation_expiry():
+    return timezone.now() + timedelta(days=7)
+
+
+class OwnerInvitation(models.Model):
+    email = models.EmailField()
+
+    token = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+    )
+
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="owner_invitations",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    expires_at = models.DateTimeField(
+        default=default_invitation_expiry
+    )
+
+    used_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Owner Invitation"
+        verbose_name_plural = "Owner Invitations"
+
+    def __str__(self):
+        return f"Invitation for {self.email}"
+
+    @property
+    def is_valid(self):
+        return (
+            self.is_active
+            and self.used_at is None
+            and timezone.now() < self.expires_at
+        )

@@ -1,0 +1,72 @@
+
+{% load static %}
+{% extends "base.html" %}
+
+{% block title %}Invitation Unavailable | ITYCREATIVE{% endblock %}
+
+{% block body_class %}owner-portal{% endblock %}
+
+{% block site_header %}{% endblock %}
+{% block site_footer %}{% endblock %}
+
+{% block content %}
+
+<div class="owner-auth-shell">
+
+    <section class="owner-auth-brand">
+
+        <a href="{% url 'core:home' %}" class="owner-brand-logo">
+            ITYCREATIVE
+        </a>
+
+        <div class="owner-brand-content">
+
+            <span class="owner-brand-label">
+                Business Management Portal
+            </span>
+
+            <h1>Your business workspace starts here.</h1>
+
+            <p>
+                Secure access to your business tools, products,
+                inventory and sales management.
+            </p>
+
+        </div>
+
+        <div class="owner-brand-footer">
+            © 2026 ITYCREATIVE. All rights reserved.
+        </div>
+
+    </section>
+
+
+    <section class="owner-auth-content">
+
+        <div class="owner-invalid-card">
+
+            <div class="owner-invalid-icon">!</div>
+
+            <h1>Invitation unavailable</h1>
+
+            <p>
+                This invitation link is invalid, expired or has
+                already been used.
+            </p>
+
+            <p style="margin-top: 12px;">
+                Please contact the website administrator if you
+                believe you should have access.
+            </p>
+
+            <a href="{% url 'core:home' %}" class="owner-submit-button">
+                Return to Homepage
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

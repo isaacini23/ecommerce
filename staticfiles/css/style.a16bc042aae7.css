@@ -422,3 +422,456 @@ main {
     margin-bottom: 25px;
     color: #666;
 }
+
+
+
+
+/* =====================================================
+   ITYCREATIVE OWNER PORTAL DESIGN SYSTEM
+   ===================================================== */
+
+:root {
+    --owner-primary: #750886;
+    --owner-primary-dark: #570465;
+    --owner-primary-light: #f7edfa;
+    --owner-background: #f7f7fa;
+    --owner-surface: #ffffff;
+    --owner-text: #211d26;
+    --owner-muted: #77717e;
+    --owner-border: #e9e5ed;
+    --owner-success: #16845b;
+    --owner-danger: #c43d4b;
+    --owner-radius: 16px;
+    --owner-shadow: 0 15px 45px rgba(35, 20, 45, 0.08);
+}
+
+.owner-portal {
+    background: var(--owner-background);
+    color: var(--owner-text);
+    min-height: 100vh;
+}
+
+.owner-portal main {
+    min-height: 100vh;
+}
+
+.owner-portal .messages {
+    padding-top: 15px;
+}
+
+.owner-portal .message {
+    padding: 13px 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    background: #f0e9f5;
+    color: var(--owner-primary-dark);
+}
+
+.owner-auth-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(440px, 0.9fr);
+    background: var(--owner-surface);
+}
+
+.owner-auth-brand {
+    background:
+        radial-gradient(circle at 15% 15%, rgba(255,255,255,.13), transparent 35%),
+        linear-gradient(145deg, #41034f, #750886 55%, #9b36a8);
+    color: white;
+    padding: 65px 9%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.owner-auth-brand::after {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    right: -180px;
+    bottom: -180px;
+    box-shadow:
+        0 0 0 35px rgba(255,255,255,.035),
+        0 0 0 75px rgba(255,255,255,.025);
+}
+
+.owner-brand-logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    color: #fff;
+}
+
+.owner-brand-content {
+    max-width: 520px;
+    position: relative;
+    z-index: 1;
+    padding: 55px 0;
+}
+
+.owner-brand-label {
+    display: inline-block;
+    padding: 8px 13px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.owner-brand-content h1 {
+    font-size: clamp(35px, 4vw, 54px);
+    line-height: 1.15;
+    margin-bottom: 22px;
+    letter-spacing: -1.5px;
+}
+
+.owner-brand-content > p {
+    color: rgba(255,255,255,.78);
+    font-size: 16px;
+    line-height: 1.9;
+    max-width: 450px;
+}
+
+.owner-brand-features {
+    margin-top: 38px;
+    display: grid;
+    gap: 18px;
+}
+
+.owner-brand-feature {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    font-size: 14px;
+    color: rgba(255,255,255,.92);
+}
+
+.owner-feature-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.13);
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+}
+
+.owner-brand-footer {
+    font-size: 12px;
+    color: rgba(255,255,255,.65);
+    position: relative;
+    z-index: 1;
+}
+
+.owner-auth-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 55px 9%;
+}
+
+.owner-auth-card {
+    width: 100%;
+    max-width: 480px;
+}
+
+.owner-auth-heading {
+    margin-bottom: 32px;
+}
+
+.owner-auth-heading .eyebrow {
+    color: var(--owner-primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.owner-auth-heading h2 {
+    font-size: 32px;
+    line-height: 1.25;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+}
+
+.owner-auth-heading p {
+    color: var(--owner-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.owner-auth-form {
+    display: grid;
+    gap: 19px;
+}
+
+.owner-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.owner-form-group label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #39333e;
+}
+
+.owner-form-group input,
+.owner-form-group select,
+.owner-form-group textarea {
+    width: 100%;
+    min-height: 51px;
+    padding: 13px 15px;
+    border: 1px solid var(--owner-border);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--owner-text);
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.owner-form-group input:focus,
+.owner-form-group select:focus,
+.owner-form-group textarea:focus {
+    outline: none;
+    border-color: var(--owner-primary);
+    box-shadow: 0 0 0 3px rgba(117,8,134,.09);
+}
+
+.owner-form-group input:disabled {
+    background: #f5f2f7;
+    color: #77717e;
+    cursor: not-allowed;
+}
+
+.owner-form-group small {
+    color: var(--owner-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.owner-form-errors,
+.owner-field-error {
+    color: var(--owner-danger);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.owner-form-errors {
+    background: #fff0f1;
+    border: 1px solid #f5d0d4;
+    padding: 13px 15px;
+    border-radius: 9px;
+}
+
+.owner-password-wrapper {
+    position: relative;
+}
+
+.owner-password-wrapper input {
+    padding-right: 75px;
+}
+
+.owner-password-toggle {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--owner-primary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.owner-submit-button {
+    min-height: 53px;
+    width: 100%;
+    border: none;
+    border-radius: 9px;
+    background: var(--owner-primary);
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background .2s, transform .2s;
+}
+
+.owner-submit-button:hover {
+    background: var(--owner-primary-dark);
+    transform: translateY(-1px);
+}
+
+.owner-submit-button:focus-visible,
+.owner-password-toggle:focus-visible {
+    outline: 3px solid rgba(117,8,134,.25);
+    outline-offset: 3px;
+}
+
+.owner-auth-security {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 14px;
+    border: 1px solid var(--owner-border);
+    border-radius: 9px;
+    margin-top: 23px;
+    background: #fcfbfd;
+}
+
+.owner-auth-security span {
+    font-size: 17px;
+}
+
+.owner-auth-security p {
+    font-size: 12px;
+    color: var(--owner-muted);
+    line-height: 1.6;
+}
+
+.owner-auth-back {
+    display: inline-block;
+    margin-top: 25px;
+    color: var(--owner-primary);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.owner-auth-back:hover {
+    text-decoration: underline;
+}
+
+/* Invalid invitation page */
+
+.owner-invalid-card {
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 55px 40px;
+    background: white;
+    border: 1px solid var(--owner-border);
+    border-radius: var(--owner-radius);
+    box-shadow: var(--owner-shadow);
+    text-align: center;
+}
+
+.owner-invalid-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 23px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff0f1;
+    color: var(--owner-danger);
+    font-size: 28px;
+}
+
+.owner-invalid-card h1 {
+    font-size: 27px;
+    margin-bottom: 13px;
+}
+
+.owner-invalid-card p {
+    color: var(--owner-muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.owner-invalid-card .owner-submit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 220px;
+    margin-top: 25px;
+    text-decoration: none;
+}
+
+/* Responsive owner portal */
+
+@media (max-width: 1000px) {
+    .owner-auth-shell {
+        grid-template-columns: minmax(0, 0.8fr) minmax(400px, 1fr);
+    }
+
+    .owner-auth-brand {
+        padding: 45px 8%;
+    }
+
+    .owner-auth-content {
+        padding: 45px 7%;
+    }
+
+    .owner-brand-content h1 {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 760px) {
+    .owner-auth-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .owner-auth-brand {
+        min-height: auto;
+        padding: 30px 7%;
+    }
+
+    .owner-brand-content {
+        padding: 45px 0 25px;
+    }
+
+    .owner-brand-content h1 {
+        font-size: 34px;
+    }
+
+    .owner-brand-content > p {
+        font-size: 14px;
+    }
+
+    .owner-brand-features {
+        margin-top: 24px;
+        gap: 12px;
+    }
+
+    .owner-brand-footer {
+        margin-top: 15px;
+    }
+
+    .owner-auth-content {
+        padding: 45px 7%;
+    }
+
+    .owner-auth-heading h2 {
+        font-size: 28px;
+    }
+
+    .owner-invalid-card {
+        margin: 50px 5%;
+        padding: 40px 23px;
+    }
+}
+
+@media (max-width: 400px) {
+    .owner-brand-content h1 {
+        font-size: 29px;
+    }
+
+    .owner-auth-content {
+        padding: 35px 6%;
+    }
+}

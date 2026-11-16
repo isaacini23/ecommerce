@@ -1,0 +1,174 @@
+
+{% extends "base.html" %}
+
+{% block title %}Owner Registration | ITYCREATIVE{% endblock %}
+
+{% block body_class %}owner-portal{% endblock %}
+
+{% block site_header %}{% endblock %}
+{% block site_footer %}{% endblock %}
+
+{% block content %}
+
+<div class="owner-auth-shell">
+
+    <section class="owner-auth-brand">
+
+        <a href="{% url 'core:home' %}" class="owner-brand-logo">
+            ITYCREATIVE
+        </a>
+
+        <div class="owner-brand-content">
+
+            <span class="owner-brand-label">
+                Business Management Portal
+            </span>
+
+            <h1>Manage your business with confidence.</h1>
+
+            <p>
+                Your dedicated business management workspace.
+                Access your products, monitor sales, manage inventory
+                and keep your operations organised in one place.
+            </p>
+
+            <div class="owner-brand-features">
+
+                <div class="owner-brand-feature">
+                    <span class="owner-feature-icon">↗</span>
+                    <span>Monitor business performance and sales</span>
+                </div>
+
+                <div class="owner-brand-feature">
+                    <span class="owner-feature-icon">▦</span>
+                    <span>Manage products and inventory</span>
+                </div>
+
+                <div class="owner-brand-feature">
+                    <span class="owner-feature-icon">✓</span>
+                    <span>Manage your business securely</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="owner-brand-footer">
+            © 2026 ITYCREATIVE. All rights reserved.
+        </div>
+
+    </section>
+
+
+    <section class="owner-auth-content">
+
+        <div class="owner-auth-card">
+
+            <div class="owner-auth-heading">
+                <div class="eyebrow">Invited account</div>
+
+                <h2>Create your owner account</h2>
+
+                <p>
+                    Complete your details below to activate your
+                    business management account.
+                </p>
+            </div>
+
+
+            <form method="POST" class="owner-auth-form">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="owner-form-errors">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+
+                    <div class="owner-form-group">
+
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {% if field.field.widget.input_type == "password" %}
+
+                            <div class="owner-password-wrapper">
+                                {{ field }}
+
+                                <button
+                                    type="button"
+                                    class="owner-password-toggle"
+                                    onclick="toggleOwnerPassword(this)">
+                                    Show
+                                </button>
+                            </div>
+
+                        {% else %}
+
+                            {{ field }}
+
+                        {% endif %}
+
+                        {% if field.help_text %}
+                            <small>{{ field.help_text|safe }}</small>
+                        {% endif %}
+
+                        {% for error in field.errors %}
+                            <span class="owner-field-error">
+                                {{ error }}
+                            </span>
+                        {% endfor %}
+
+                    </div>
+
+                {% endfor %}
+
+                <button type="submit" class="owner-submit-button">
+                    Create Owner Account
+                </button>
+
+            </form>
+
+
+            <div class="owner-auth-security">
+                <span>🔒</span>
+                <p>
+                    Your registration is protected by a personal
+                    invitation. Only the invited email address can
+                    complete this registration.
+                </p>
+            </div>
+
+            <a href="{% url 'core:home' %}" class="owner-auth-back">
+                ← Back to ITYCREATIVE
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+function toggleOwnerPassword(button) {
+    const input = button.parentElement.querySelector("input");
+
+    if (!input) return;
+
+    if (input.type === "password") {
+        input.type = "text";
+        button.textContent = "Hide";
+    } else {
+        input.type = "password";
+        button.textContent = "Show";
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,154 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} - ITYCREATIVE{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-form-page {
+        background: #f5f6fa;
+        min-height: 85vh;
+        padding: 40px 0;
+    }
+
+    .product-form-container {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 35px;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    .product-form-container h1 {
+        margin-top: 0;
+        color: #222;
+    }
+
+    .form-section {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .form-section h2 {
+        font-size: 19px;
+        margin-bottom: 20px;
+    }
+
+    .product-form-container label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .product-form-container input:not([type="checkbox"]),
+    .product-form-container select,
+    .product-form-container textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    .product-form-container input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+    .product-form-container ul.errorlist {
+        color: #c0392b;
+        font-size: 13px;
+    }
+
+    .image-form {
+        background: #fafafa;
+        padding: 18px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .form-btn {
+        background: #750886;
+        color: white;
+        border: none;
+        padding: 13px 22px;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .cancel-btn {
+        background: #eee;
+        color: #333;
+    }
+
+    @media (max-width: 600px) {
+        .product-form-container {
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="product-form-page">
+    <div class="container">
+
+        <div class="product-form-container">
+
+            <h1>{{ page_title }}</h1>
+            <p>Enter the product details below.</p>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-section">
+                    <h2>Product Information</h2>
+                    {{ form.as_p }}
+                </div>
+
+                <div class="form-section">
+                    <h2>Additional Product Images</h2>
+
+                    {{ formset.management_form }}
+
+                    {% for image_form in formset %}
+                        <div class="image-form">
+                            {{ image_form.as_p }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="form-btn">
+                        Save Product
+                    </button>
+
+                    <a
+                        href="{% url 'products:owner_dashboard' %}"
+                        class="form-btn cancel-btn"
+                    >
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

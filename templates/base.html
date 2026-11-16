@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,42 +7,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}E-Commerce Store{% endblock %}</title>
+    <title>{% block title %}ITYCREATIVE | Online Store{% endblock %}</title>
+
+    <meta name="theme-color" content="#750886">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     {% block extra_css %}{% endblock %}
 </head>
 
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
+    {% block site_header %}
     <header class="site-header">
         <div class="container navbar">
 
-            <a href="{% url 'core:home' %}" class="logo" STYLE="font-family: 'Arial Black', sans-serif; font-size: 24px; color: #750886; text-decoration: none;">
+            <a href="{% url 'core:home' %}" class="logo">
                 ITYCREATIVE
             </a>
 
-            <button class="menu-toggle" aria-label="Toggle navigation">
+            <button class="menu-toggle"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false">
                 ☰
             </button>
 
             <ul class="nav-links">
-                <li>
-                    <a href="{% url 'core:home' %}">Home</a>
-                </li>
-
-                <li>
-                    <a href="{% url 'products:list' %}">Products</a>
-                </li>
-
-                <li>
-                    <a href="#">Categories</a>
-                </li>
-
-                <li>
-                    <a href="#">Wishlist</a>
-                </li>
+                <li><a href="{% url 'core:home' %}">Home</a></li>
+                <li><a href="{% url 'products:list' %}">Products</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Wishlist</a></li>
 
                 <li>
                     <a href="{% url 'cart:detail' %}">
@@ -63,31 +58,31 @@
 
         </div>
     </header>
-
+    {% endblock %}
 
     <main>
 
-    {% if messages %}
-        <div class="container messages">
-            {% for message in messages %}
-                <div class="message {{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+        {% if messages %}
+            <div class="container messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-    {% block content %}{% endblock %}
+        {% block content %}{% endblock %}
 
-</main>
+    </main>
 
-
+    {% block site_footer %}
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 E-Commerce Store. All rights reserved.</p>
+            <p>&copy; 2026 ITYCREATIVE. All rights reserved.</p>
         </div>
     </footer>
-
+    {% endblock %}
 
     <script src="{% static 'js/main.js' %}"></script>
 
