@@ -5,6 +5,7 @@ from . import views
 
 app_name = "accounts"
 
+
 urlpatterns = [
     # Customer registration and account
     path("register/", views.register, name="register"),
