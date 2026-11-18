@@ -1,0 +1,127 @@
+
+{% extends "base.html" %}
+
+{% block title %}Delete Category | ITYCREATIVE{% endblock %}
+
+{% block extra_css %}
+<style>
+    .delete-page {
+        max-width: 600px;
+        margin: 70px auto;
+        padding: 0 20px;
+    }
+
+    .delete-card {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 35px;
+        text-align: center;
+        box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    }
+
+    .warning-icon {
+        width: 65px;
+        height: 65px;
+        background: #fff0f0;
+        color: #dc3545;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        margin: 0 auto 20px;
+    }
+
+    .delete-card h1 {
+        font-size: 25px;
+        margin-bottom: 12px;
+        color: #222;
+    }
+
+    .delete-card p {
+        color: #666;
+        line-height: 1.7;
+    }
+
+    .category-name {
+        color: #750886;
+        font-weight: 700;
+    }
+
+    .warning-text {
+        background: #fff8e6;
+        color: #856404;
+        padding: 12px;
+        border-radius: 7px;
+        font-size: 13px;
+        margin: 20px 0;
+    }
+
+    .delete-actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 25px;
+        flex-wrap: wrap;
+    }
+
+    .delete-btn {
+        background: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 7px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .delete-btn:hover {
+        background: #bd2130;
+    }
+
+    .cancel-btn {
+        background: #f2f2f2;
+        color: #444;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 7px;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="delete-page">
+    <div class="delete-card">
+
+        <div class="warning-icon">!</div>
+
+        <h1>Delete Category?</h1>
+
+        <p>
+            Are you sure you want to delete the category
+            <span class="category-name">{{ category.name }}</span>?
+        </p>
+
+        <div class="warning-text">
+            This action cannot be undone. Categories assigned to existing
+            products cannot be deleted.
+        </div>
+
+        <div class="delete-actions">
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">
+                    Yes, Delete Category
+                </button>
+            </form>
+
+            <a href="{% url 'products:category_list' %}" class="cancel-btn">
+                Cancel
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -38,6 +38,7 @@
                 <li><a href="#">Categories</a></li>
                 <li><a href="#">Wishlist</a></li>
 
+
                 <li>
                     <a href="{% url 'cart:detail' %}">
                         Cart
@@ -46,6 +47,13 @@
                         {% endif %}
                     </a>
                 </li>
+                {% if request.user.is_authenticated and request.user.is_product_manager %}
+                <li>
+                    <a href="{% url 'products:owner_dashboard' %}">
+                        Owner Dashboard
+                    </a>
+                </li>
+            {% endif %}
 
                 <li>
                     {% if not request.user.is_authenticated %}

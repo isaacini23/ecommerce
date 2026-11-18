@@ -1,0 +1,364 @@
+
+{% extends "base.html" %}
+
+{% block title %}Category Management | ITYCREATIVE{% endblock %}
+
+{% block extra_css %}
+<style>
+    .category-page {
+        background: #f6f7fb;
+        min-height: 100vh;
+        padding: 30px 0 50px;
+        color: #252336;
+    }
+
+    .category-page * {
+        box-sizing: border-box;
+    }
+
+    .category-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+    }
+
+    .category-header h1 {
+        font-size: 27px;
+        margin: 0 0 6px;
+        font-weight: 700;
+    }
+
+    .category-header p {
+        color: #858494;
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .category-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #750886;
+        color: white;
+        padding: 12px 19px;
+        border-radius: 7px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: .2s;
+    }
+
+    .category-btn:hover {
+        background: #5e066d;
+        color: white;
+    }
+
+    .category-panel {
+        background: white;
+        border: 1px solid #eeedf3;
+        border-radius: 12px;
+        padding: 23px;
+        box-shadow: 0 3px 12px rgba(30, 20, 50, .025);
+    }
+
+    .category-panel h2 {
+        font-size: 17px;
+        margin: 0 0 5px;
+        font-weight: 700;
+    }
+
+    .category-panel > p {
+        color: #92909f;
+        font-size: 13px;
+        margin: 0 0 22px;
+    }
+
+    .category-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .category-table {
+        width: 100%;
+        min-width: 650px;
+        border-collapse: collapse;
+    }
+
+    .category-table th {
+        background: #faf9fc;
+        color: #858494;
+        text-align: left;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+        padding: 14px;
+        font-weight: 600;
+    }
+
+    .category-table td {
+        padding: 15px 14px;
+        border-bottom: 1px solid #f0eef3;
+        font-size: 13px;
+        color: #484657;
+        vertical-align: middle;
+    }
+
+    .category-name {
+        font-weight: 600;
+        color: #292638;
+    }
+
+    .category-description {
+        display: block;
+        color: #92909f;
+        font-size: 11px;
+        margin-top: 4px;
+        max-width: 300px;
+    }
+
+    .category-image {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        border-radius: 7px;
+        background: #f6f4f8;
+    }
+
+    .category-image-placeholder {
+        width: 45px;
+        height: 45px;
+        display: grid;
+        place-items: center;
+        border-radius: 7px;
+        background: #f5eafa;
+        color: #750886;
+        font-size: 18px;
+    }
+
+    .category-status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .category-active {
+        color: #16834a;
+        background: #e9f8ef;
+    }
+
+    .category-inactive {
+        color: #b63d3d;
+        background: #fff0f0;
+    }
+
+    .category-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .category-edit,
+    .category-delete {
+        display: inline-block;
+        padding: 7px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    .category-edit {
+        color: #750886;
+        background: #f7eefa;
+    }
+
+    .category-edit:hover {
+        background: #eeddf4;
+        color: #5e066d;
+    }
+
+    .category-delete {
+        color: #b63d3d;
+        background: #fff0f0;
+    }
+
+    .category-delete:hover {
+        background: #fce0e0;
+        color: #962c2c;
+    }
+
+    .category-messages {
+        margin-bottom: 20px;
+    }
+
+    .category-message {
+        padding: 12px 15px;
+        border-radius: 7px;
+        margin-bottom: 8px;
+        font-size: 13px;
+    }
+
+    .category-message.success {
+        color: #16834a;
+        background: #e9f8ef;
+    }
+
+    .category-message.error {
+        color: #b63d3d;
+        background: #fff0f0;
+    }
+
+    .empty-categories {
+        text-align: center;
+        padding: 55px 15px;
+        color: #858494;
+    }
+
+    .empty-categories h3 {
+        color: #292638;
+        margin-bottom: 8px;
+    }
+
+    @media (max-width: 600px) {
+        .category-page {
+            padding-top: 20px;
+        }
+
+        .category-header h1 {
+            font-size: 23px;
+        }
+
+        .category-panel {
+            padding: 17px;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<section class="category-page">
+    <div class="container">
+
+        <div class="category-header">
+            <div>
+                <h1>Category Management</h1>
+                <p>Create and organise the categories used in your store.</p>
+            </div>
+
+            <a href="{% url 'products:category_create' %}" class="category-btn">
+                + Add New Category
+            </a>
+        </div>
+
+
+        {% if messages %}
+            <div class="category-messages">
+                {% for message in messages %}
+                    <div class="category-message {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        <div class="category-panel">
+            <h2>Store Categories</h2>
+            <p>{{ categories|length }} categories registered</p>
+
+            {% if categories %}
+
+                <div class="category-table-wrapper">
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Category</th>
+                                <th>Products</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for category in categories %}
+                                <tr>
+                                    <td>
+                                        {% if category.image %}
+                                            <img
+                                                src="{{ category.image.url }}"
+                                                alt="{{ category.name }}"
+                                                class="category-image"
+                                            >
+                                        {% else %}
+                                            <div class="category-image-placeholder">▦</div>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        <span class="category-name">{{ category.name }}</span>
+                                        {% if category.description %}
+                                            <span class="category-description">
+                                                {{ category.description|truncatechars:75 }}
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>{{ category.products.count }}</td>
+
+                                    <td>
+                                        {% if category.is_active %}
+                                            <span class="category-status category-active">Active</span>
+                                        {% else %}
+                                            <span class="category-status category-inactive">Inactive</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        <div class="category-actions">
+                                            <a
+                                                href="{% url 'products:category_edit' category.pk %}"
+                                                class="category-edit"
+                                            >
+                                                Edit
+                                            </a>
+
+                                            <a
+                                                href="{% url 'products:category_delete' category.pk %}"
+                                                class="category-delete"
+                                            >
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            {% else %}
+
+                <div class="empty-categories">
+                    <h3>No categories yet</h3>
+                    <p>Create your first category to organise your products.</p>
+                </div>
+
+            {% endif %}
+        </div>
+
+        <div style="margin-top:20px;">
+            <a href="{% url 'products:owner_dashboard' %}" class="category-edit">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
